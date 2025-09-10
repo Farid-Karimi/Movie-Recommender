@@ -1,27 +1,27 @@
-# How to Run the Project
+# CineMatch: A Hybrid Movie Recommendation System
 
-Follow these steps to set it up:
-## 1. Prepare the Data
+CineMatch is a movie recommendation system designed to provide personalized movie suggestions. It leverages [data](https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset/data) from **The Movie Database (TMDb)** and **MovieLens** to deliver relevant recommendations.
 
-Place all the `.csv` files in a root-level folder named `Data/`. The notebooks expect this exact folder name since i couldn't submit it due to sheer size of it.
-## 2. Exploratory Data Analysis
+The system is built on a hybrid model that combines the strengths of both **content-based** and **collaborative filtering** methods. It analyzes movie attributes like genre, cast, and keywords to find similar content, and then re-ranks these suggestions based on predicted user ratings, ensuring the final recommendations are tailored to individual tastes. A popularity-based model also serves as a baseline for general recommendations.
 
-Run the notebook `EDA/EDA.ipynb` to process raw data, generate cleaned datasets, and produce plots. Save the outputs for the next stage.
-## 3. Feature Engineering
+## Live Demo
 
-Run `Model/Prep.ipynb` to perform feature engineering and prepare the data for training.
-## 4. Train the Models
+You can try out the deployed application on Hugging Face Spaces:
 
-Experiment with the recommender approaches:
+[CineMatch on Hugging Face](https://huggingface.co/spaces/Pro-metheus/CineMatch)
 
-* Content-Based Filtering
-* Collaborative Filtering (no `surprise` library, kept for reference)
-* Hybrid Approach (recommended for deployment)
+## How It Works
 
-The order does not matter, but you must run the Hybrid notebook to deploy.
-## 5. Run the App
+The recommendation process begins by using a **TF-IDF** vectorizer to analyze textual features of movies, calculating content similarity with **cosine similarity**. To personalize these results, a **Singular Value Decomposition (SVD)** model, trained on user ratings, predicts how a user would rate the similar movies. The final list of recommendations is then sorted based on these predicted scores.
 
-Two versions exist:
+## Running the Project Locally
 
-* **Slapp (Streamlit app):** First prototype. Couldn’t be deployed on Hugging Face due to file size and Streamlit restrictions caused by using docker.
-* **Cinematch (Gradio app):** Final version. Located in the `cinematch/` folder. Uses the saved models and CSV files for deployment on Hugging Face.
+To set up and run this project on your own machine, follow these steps:
+
+1. Place all the necessary `.csv` data files into a folder named `Data/` at the root of the project.
+
+2. Run the exploratory data analysis and feature engineering notebooks (`EDA/EDA.ipynb` and `Model/Prep.ipynb`) to process the raw data.
+
+3. After preparing the data, you can train the models. While there are notebooks for content-based and collaborative filtering, the hybrid approach is recommended for the best results.
+
+4. The final, deployable application is a Gradio app located in the `cinematch/` folder.
